@@ -1,12 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from "axios";
 
 const Login = () => {
-    
-    return(<ComponentContainer>
+
+
+    const { push } = useHistory();
+
+    const [credentials, setCredentials] = useState({
+        username: "",
+        password: ""
+    })
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const handleChange = (e) => {
+        setCredentials({
+            ...credentials,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        axios.post(`http://localhost:5000/api/login`, credentials)
+            .then(res => {
+                console.log(res);
+                localStorage.setItem("token", res.data.token);
+                push("/view");
+            })
+            .catch(err => {
+                setErrorMessage(err.response.data.error);
+            })
+    }
+
+    return (<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
+
+            <FormGroup onSubmit={handleSubmit}>
+
+                <Label htmlFor='username'>Username: </Label>
+                <Input
+                    id="username"
+                    name="username"
+                    type="text"
+                    value={credentials.username}
+                    onChange={handleChange}
+                />
+
+                <Label htmlFor='password'>Password: </Label>
+                <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={credentials.password}
+                    onChange={handleChange}
+                />
+
+                <Button id="submit">Click to Login</Button>
+            </FormGroup>
+
+            {errorMessage && <p id="error">{errorMessage}</p>}
+
         </ModalContainer>
     </ComponentContainer>);
 }
