@@ -9,8 +9,9 @@ const Logout = () => {
     useEffect( () => {
         axiosWithAuth().post("/logout")
         .then(res => {
+            console.log(res);
             localStorage.removeItem("token");
-            console.log("logout:",res.data.token);
+            console.log(localStorage.getItem("token"));
             push("/login");
         })
         .catch(err => {
