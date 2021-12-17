@@ -120,9 +120,20 @@ In this project, you will demonstrate your mastery of these skills by creating *
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. Add your answers below.
 
 1. Explain what a token is used for.
+A token is used to check if a user is authenticated and ensure unique secure id.
+It is issued by a server in the form of string after a successful auth resquest. 
+It can be stored locally or through a secure cookie to maintain authorization on the client side without needing to reenter user's credentials.
+
 
 2. What steps can you take in your web apps to keep your data secure?
+utilize cookies for token 
+
 
 3. Describe how web servers work.
+Web servers are able to assign a specific DNS record to a specific URL.
 
 4. Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
+Create post request
+Read get request
+Update put request
+Delete delete request

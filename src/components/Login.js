@@ -8,10 +8,12 @@ const Login = () => {
 
     const { push } = useHistory();
 
-    const [credentials, setCredentials] = useState({
-        username: "",
-        password: ""
-    })
+    const initialValues = {
+        username:"",
+        password:""
+    }
+
+    const [credentials, setCredentials] = useState(initialValues);
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (e) => {
@@ -31,7 +33,9 @@ const Login = () => {
                 push("/view");
             })
             .catch(err => {
+                console.log(err.response);
                 setErrorMessage(err.response.data.error);
+                setCredentials(initialValues);
             })
     }
 
@@ -39,9 +43,9 @@ const Login = () => {
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
-
+            <div>
             <FormGroup onSubmit={handleSubmit}>
-
+                
                 <Label htmlFor='username'>Username: </Label>
                 <Input
                     id="username"
@@ -58,12 +62,11 @@ const Login = () => {
                     type="password"
                     value={credentials.password}
                     onChange={handleChange}
-                />
-
-                <Button id="submit">Click to Login</Button>
+                />               
+                <Button id="submit">Click to Login</Button>                
             </FormGroup>
-
             {errorMessage && <p id="error">{errorMessage}</p>}
+            </div>
 
         </ModalContainer>
     </ComponentContainer>);
